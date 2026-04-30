@@ -1,0 +1,6 @@
+openai
+yfinance
+streamlit
+pandas
+python-dotenv
+loguru
