@@ -13,6 +13,9 @@ class BuffettEngine:
             raise ValueError("未检测到 API Key，请在侧边栏输入。")
         # DeepSeek 完全兼容 OpenAI 接口，使用 /v1/chat/completions
         self.endpoint = f"{self.base_url}/v1/chat/completions"
+        # trust_env=False 彻底忽略系统/环境变量中的代理设置
+        self.session = requests.Session()
+        self.session.trust_env = False
         logger.info(f"BuffettEngine 初始化，endpoint={self.endpoint}")
 
     def _post(self, payload, stream=False):
@@ -21,7 +24,13 @@ class BuffettEngine:
             "Content-Type": "application/json",
         }
         try:
-            response = requests.post(self.endpoint, headers=headers, json=payload, stream=stream, timeout=60)
+            response = self.session.post(
+                self.endpoint,
+                headers=headers,
+                json=payload,
+                stream=stream,
+                timeout=60,
+            )
             response.raise_for_status()
             return response
         except Exception as e:

@@ -2,6 +2,10 @@ import requests
 import json
 from loguru import logger
 
+# 全局 Session，trust_env=False 彻底忽略系统代理
+_session = requests.Session()
+_session.trust_env = False
+
 def get_stock_data(symbol: str, proxy: str = None):
     """
     双源备份方案：优先腾讯，备选网易（目前最稳）
@@ -14,7 +18,7 @@ def get_stock_data(symbol: str, proxy: str = None):
             url = f"https://qt.gtimg.cn/q={prefix}{symbol}"
             
             logger.info(f"正在从腾讯抓取 A 股: {symbol}")
-            resp = requests.get(url, timeout=5)
+            resp = _session.get(url, timeout=5)
             content = resp.text
             
             # 腾讯接口返回的是 v_sh600519="1~贵州茅台~600519~..."
