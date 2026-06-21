@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+# Env files
+.env
+config.json
+# IDE
+.vscode/
+.idea/
+# Misc
+.DS_Store
+# Site-packages
+site-packages/
+# 误入的其他项目
+deepseek-anti-ai-agent/

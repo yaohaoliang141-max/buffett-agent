@@ -1,6 +1,5 @@
-openai
-yfinance
 streamlit
 pandas
+requests
 python-dotenv
 loguru
